@@ -1,7 +1,4 @@
-RegisterNetEvent("ez_consume:consume", function(hunger, thirst, stress, stamina, innerstaminagold, outerstaminagold, innerhealth, innerhealthgold, outerhealth, outerhealthgold)
-    hunger = tonumber(hunger) or 0
-    thirst = tonumber(thirst) or 0
-    stress = tonumber(stress)*-1 or 0
+RegisterNetEvent("ez_consume:consume", function(status, stamina, innerstaminagold, outerstaminagold, innerhealth, innerhealthgold, outerhealth, outerhealthgold)
     stamina = tonumber(stamina) or 0
     innerstaminagold = tonumber(innerstaminagold) or 0
     outerstaminagold = tonumber(outerstaminagold) or 0
@@ -11,9 +8,7 @@ RegisterNetEvent("ez_consume:consume", function(hunger, thirst, stress, stamina,
     outerhealthgold = tonumber(outerhealthgold) or 0
 	local ped = PlayerPedId()
 
-    Config.AddHunger(hunger)
-	Config.AddThirst(thirst)
-	Config.AddStress(stress)
+	Config.ExecuteStatus(status)
 
 	if (stamina ~= 0) then
 		local s = Citizen.InvokeNative(0x36731AC041289BB1, ped, 1) --ACTUAL STAMINA CORE GETTER
@@ -78,5 +73,5 @@ RegisterNetEvent("ez_consume:useitem", function(item)
 		end
 		Citizen.InvokeNative(0x2208438012482A1A, PlayerPedId(), true, true)
 	end
-	TriggerEvent("ez_consume:consume", v.Hunger, v.Thirst, v.Stress, v.Stamina, v.InnerStaminaGold, v.OuterStaminaGold, v.InnerHealth, v.InnerHealthGold, v.OuterHealth, v.OuterHealthGold)
+	TriggerEvent("ez_consume:consume", v.Status, v.Stamina, v.InnerStaminaGold, v.OuterStaminaGold, v.InnerHealth, v.InnerHealthGold, v.OuterHealth, v.OuterHealthGold)
 end)
