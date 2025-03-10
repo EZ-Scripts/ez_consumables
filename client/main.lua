@@ -34,7 +34,6 @@ Citizen.CreateThread(function()
                 TriggerEvent('ez_consumables:client:sleep')
                 Wait(30000)
                 TriggerEvent('ez_consumables:client:cancelemote')
-                alcoholCount = 0
             else
                 Citizen.InvokeNative(0x406CCF555B04FAD3 , PlayerPedId(), 1, 0.0) --not drunk
                 if effectActive == true then

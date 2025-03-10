@@ -1,6 +1,6 @@
 Config = {}
 
-Config.Debug = true -- Enable debug messages
+Config.Debug = false -- Enable debug messages
 
 Config.AnimationTime = 5000 -- Time in MS for the animation to play
 
