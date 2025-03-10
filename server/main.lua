@@ -9,6 +9,9 @@ Citizen.CreateThread(function()
             local item = exports.vorp_inventory:getItemDB(k)
             Wait(1000)
             TriggerClientEvent("vorp:TipRight", data.source, "Consumed a "..item.label, 5000)
+            if v.ItemReturn then
+                VorpInv.addItem(data.source, v.ItemReturn, 1)
+            end
         end)
     end
 end)

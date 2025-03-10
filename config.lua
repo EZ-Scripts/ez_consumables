@@ -1,8 +1,13 @@
 Config = {}
 
+Config.Debug = true -- Enable debug messages
+
 Config.AnimationTime = 5000 -- Time in MS for the animation to play
 
-
+Config.Drunk = {
+    Drunk = 100,
+    PassOut = 300,
+}
 --[[
 Functions to add values. This is compatible with VORP & EZ.
 Note: VORP does not have a stress system, so it will be ignored.
@@ -342,6 +347,7 @@ Config.ItemsToUse = {
             Stress = 10,
             Metabolism = math.random(0, 10),
         },
+        AlcoholLevel = 30,
         Stamina = 5,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
@@ -358,6 +364,7 @@ Config.ItemsToUse = {
             Stress = 8,
             Metabolism = math.random(0, 10),
         },
+        AlcoholLevel = 25,
         Stamina = 4,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
@@ -371,9 +378,10 @@ Config.ItemsToUse = {
         Status = {
             Hunger = 0,
             Thirst = 28,
-            Stress = 9,
+            Stress = 15,
             Metabolism = math.random(0, 10),
         },
+        AlcoholLevel = 35,
         Stamina = 5,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
@@ -390,6 +398,7 @@ Config.ItemsToUse = {
             Stress = 6,
             Metabolism = math.random(0, 10),
         },
+        AlcoholLevel = 20,
         Stamina = 3,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
@@ -406,6 +415,7 @@ Config.ItemsToUse = {
             Stress = 10,
             Metabolism = math.random(0, 10),
         },
+        AlcoholLevel = 40,
         Stamina = 5,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
@@ -422,6 +432,7 @@ Config.ItemsToUse = {
             Stress = 10,
             Metabolism = math.random(-10, 10),
         },
+        AlcoholLevel = 45,
         Stamina = 7,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
@@ -438,6 +449,7 @@ Config.ItemsToUse = {
             Stress = 10,
             Metabolism = math.random(-10, 10),
         },
+        AlcoholLevel = 45,
         Stamina = 7,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
@@ -494,7 +506,24 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
         Animation = "drink_coffee"
-    },    
+    },
+    consumable_water = {
+        Status = {
+            Hunger = 0,
+            Thirst = 30,
+            Stress = 1,
+            Metabolism = math.random(-80, -40), -- Healthy
+        },
+        Stamina = 2,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_coffee",
+        ItemReturn = "emptywaterbottle" -- or "glassbottle" if you want to be more generic
+    },
 
     --
     -- MEDICINES
@@ -514,6 +543,4 @@ Config.ItemsToUse = {
         InnerHealthGold = 100.0,
         OuterHealthGold = 0.0,
     },
-
-    
 }
