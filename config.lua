@@ -65,9 +65,9 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
-    consumable_breakfast = {
+    consumable_venison = {
         Status = {
-            Hunger = 30,
+            Hunger = 15,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(-10, 10),
@@ -80,11 +80,207 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
+    consumable_steak = {
+        Status = {
+            Hunger = 15,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_porkchop = {
+        Status = {
+            Hunger = 25,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_bacon = {
+        Status = {
+            Hunger = 20,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_mutton = {
+        Status = {
+            Hunger = 20,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+   
+    consumable_bird = {
+        Status = {
+            Hunger = 19,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_friedchicken = {
+        Status = {
+            Hunger = 25,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_stringymeat = {
+        Status = {
+            Hunger = 20,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_biggamechop = {
+        Status = {
+            Hunger = 18,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_herptile = {
+        Status = {
+            Hunger = 22,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_gamemeatjerky = {
+        Status = {
+            Hunger = 18,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_boiledegg = {
+        Status = {
+            Hunger = 15,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1000,1000),
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_heartcookie = {
+        Status = {
+            Hunger = 15,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_bread = {
+        Status = {
+            Hunger = 15,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
     consumable_caramel = {
         Status = {
             Hunger = 10,
             Thirst = 0,
-            Stress = 5,
+            Stress = 18,
             Metabolism = math.random(30, 50), -- Fatty
         },
         Stamina = 2,
@@ -99,7 +295,7 @@ Config.ItemsToUse = {
         Status = {
             Hunger = 10,
             Thirst = 0,
-            Stress = 5,
+            Stress = 15,
             Metabolism = math.random(30, 50), -- Fatty
         },
         Stamina = 2,
@@ -114,7 +310,7 @@ Config.ItemsToUse = {
         Status = {
             Hunger = 15,
             Thirst = 0,
-            Stress = 13,
+            Stress = 5,
             Metabolism = math.random(-80, -40), -- Healthy
         },
         Stamina = 2,
@@ -143,7 +339,7 @@ Config.ItemsToUse = {
     consumable_peach = {
         Status = {
             Hunger = 15,
-            Thirst = 0,
+            Thirst = 10,
             Stress = 5,
             Metabolism = math.random(-10, 10),
         },
@@ -160,7 +356,7 @@ Config.ItemsToUse = {
             Hunger = 30,
             Thirst = 0,
             Stress = 5,
-            Metabolism = math.random(-80, -40), -- Healthy
+            Metabolism = math.random(-1000, -999), -- Healthy
         },
         Stamina = 2,
         InnerStaminaGold = 0,
@@ -218,7 +414,7 @@ Config.ItemsToUse = {
     },
     consumable_blueberrypie = {
         Status = {
-            Hunger = 25,
+            Hunger = 19,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -235,7 +431,7 @@ Config.ItemsToUse = {
         Status = {
             Hunger = 30,
             Thirst = 0,
-            Stress = 2,
+            Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
         },
         Stamina = 10,
@@ -249,21 +445,6 @@ Config.ItemsToUse = {
     consumable_chocolatecake = {
         Status = {
             Hunger = 25,
-            Thirst = 0,
-            Stress = 5,
-            Metabolism = math.random(1, 80), -- Fatty
-        },
-        Stamina = 5,
-        InnerStaminaGold = 0,
-        OuterStaminaGold = 0,
-        InnerHealth = 0,
-        OuterHealth = 0,
-        InnerHealthGold = 0,
-        OuterHealthGold = 0,
-    },
-    consumable_cupcake = {
-        Status = {
-            Hunger = 15,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -291,9 +472,99 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
-    consumable_lemoncake = {
+    consumable_veggiestew = {
+        Status = {
+            Hunger = 25,
+            Thirst = 20,
+            Stress = 10,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_veggies = {
+        Status = {
+            Hunger = 25,
+            Thirst = 0,
+            Stress = 8,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_pretzel = {
+        Status = {
+            Hunger =18,
+            Thirst = 0,
+            Stress = 8,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_pickle = {
+        Status = {
+            Hunger =15,
+            Thirst = 0,
+            Stress = 8,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_lemondrops = {
+        Status = {
+            Hunger =8,
+            Thirst = 0,
+            Stress = 10,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 10,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_meat_greavy = {
         Status = {
             Hunger = 20,
+            Thirst = 20,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_steakpie = {
+        Status = {
+            Hunger = 25,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -306,9 +577,24 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
-    consumable_poundcake = {
+    Red_Raspberry = {
         Status = {
-            Hunger = 20,
+            Hunger = 5,
+            Thirst = 0,
+            Stress = 8,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 2,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_cupcake = {
+        Status = {
+            Hunger = 15,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -321,9 +607,101 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
-    consumable_spongecake = {
+    consumable_raspberryjello = {
         Status = {
-            Hunger = 20,
+            Hunger = 15,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_spaghetti_meatballs = {
+        Status = {
+            Hunger = 25,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_peachcobbler = {
+        Status = {
+            Hunger = 15,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_crablegs = {
+        Status = {
+            Hunger = 15,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+
+    Consumable_lemondrops = {
+        Status = {
+            Hunger = 15,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+
+    consumable_breakfast = {
+        Status = {
+            Hunger = 15,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_frostedandglazed = {
+        Status = {
+            Hunger = 15,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -343,7 +721,7 @@ Config.ItemsToUse = {
     whisky = {
         Status = {
             Hunger = 0,
-            Thirst = 25,
+            Thirst = 20,
             Stress = 10,
             Metabolism = math.random(0, 10),
         },
@@ -361,7 +739,7 @@ Config.ItemsToUse = {
         Status = {
             Hunger = 0,
             Thirst = 30,
-            Stress = 8,
+            Stress = 10,
             Metabolism = math.random(0, 10),
         },
         AlcoholLevel = 25,
@@ -395,7 +773,7 @@ Config.ItemsToUse = {
         Status = {
             Hunger = 0,
             Thirst = 20,
-            Stress = 6,
+            Stress = 10,
             Metabolism = math.random(0, 10),
         },
         AlcoholLevel = 20,
@@ -425,40 +803,6 @@ Config.ItemsToUse = {
         OuterHealthGold = 0,
         Animation = "drink_tequila_bottle"
     },
-    tropicalPunchMoonshine = {
-        Status = {
-            Hunger = 0,
-            Thirst = 35,
-            Stress = 10,
-            Metabolism = math.random(-10, 10),
-        },
-        AlcoholLevel = 45,
-        Stamina = 7,
-        InnerStaminaGold = 0,
-        OuterStaminaGold = 0,
-        InnerHealth = 0,
-        OuterHealth = 0,
-        InnerHealthGold = 0,
-        OuterHealthGold = 0,
-        Animation = "drink_moonshine_jar"
-    },
-    wildCiderMoonshine = {
-        Status = {
-            Hunger = 0,
-            Thirst = 35,
-            Stress = 10,
-            Metabolism = math.random(-10, 10),
-        },
-        AlcoholLevel = 45,
-        Stamina = 7,
-        InnerStaminaGold = 0,
-        OuterStaminaGold = 0,
-        InnerHealth = 0,
-        OuterHealth = 0,
-        InnerHealthGold = 0,
-        OuterHealthGold = 0,
-        Animation = "drink_moonshine_jar"
-    },
     raspberryale = {
         Status = {
             Hunger = 0,
@@ -479,7 +823,39 @@ Config.ItemsToUse = {
         Status = {
             Hunger = 0,
             Thirst = 25,
-            Stress = 2,
+            Stress = 10,
+            Metabolism = math.random(-80, -40), -- Healthy
+        },
+        Stamina = 8,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_coffee"
+    },
+    consumable_creamcoffee = {
+        Status = {
+            Hunger = 0,
+            Thirst = 25,
+            Stress = 10,
+            Metabolism = math.random(-80, -40), -- Healthy
+        },
+        Stamina = 8,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_coffee"
+    },
+    consumable_ginsengtea = {
+        Status = {
+            Hunger = 0,
+            Thirst = 25,
+            Stress = 5,
             Metabolism = math.random(-80, -40), -- Healthy
         },
         Stamina = 8,
@@ -494,25 +870,44 @@ Config.ItemsToUse = {
     consumable_raspberrywater = {
         Status = {
             Hunger = 0,
-            Thirst = 30,
-            Stress = 1,
+            Thirst = 35,
+            Stress = 5,
             Metabolism = math.random(-80, -40), -- Healthy
         },
         Stamina = 2,
-        InnerStaminaGold = 0,
-        OuterStaminaGold = 0,
+        InnerStaminaGold = 100,
+        OuterStaminaGold = 100,
         InnerHealth = 0,
         OuterHealth = 0,
         InnerHealthGold = 0,
         OuterHealthGold = 0,
-        Animation = "drink_coffee"
+        Animation = "drink_coffee",
+        ItemReturn = "emptywaterbottle" -- or "glassbottle" if you want to be more generic
+    },
+    consumable_blackberrywater = {
+        Status = {
+            Hunger = 0,
+            Thirst = 35,
+            Stress = 5,
+            Metabolism = math.random(-80, -40), -- Healthy
+        },
+        Stamina = 2,
+        InnerStaminaGold = 100,
+        OuterStaminaGold = 100,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_coffee",
+        ItemReturn = "emptywaterbottle" -- or "glassbottle" if you want to be more generic
+
     },
     consumable_water = {
         Status = {
             Hunger = 0,
-            Thirst = 30,
-            Stress = 1,
-            Metabolism = math.random(-80, -40), -- Healthy
+            Thirst = 15,
+            Stress = 5,
+            Metabolism = math.random(-10, 0), -- Healthy
         },
         Stamina = 2,
         InnerStaminaGold = 0,
@@ -542,5 +937,248 @@ Config.ItemsToUse = {
         OuterHealth = 0,
         InnerHealthGold = 100.0,
         OuterHealthGold = 0.0,
+    },
+    ["medical_morphine"] = {
+        Status = {
+            Hunger = 0,
+            Thirst = 0,
+            Stress = 100,
+            Metabolism = 0,
+        },
+        Stamina = 0,
+        InnerStaminaGold = 100.0,
+        OuterStaminaGold = 100.0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 100.0,
+        OuterHealthGold = 100.0,
+    },
+    ["medical_tylenol"] = {
+        Status = {
+            Hunger = 0,
+            Thirst = 0,
+            Stress = 0,
+            Metabolism = 0,
+        },
+        Stamina = 0,
+        InnerStaminaGold = 0.0,
+        OuterStaminaGold = 0.0,
+        InnerHealth = 100,
+        OuterHealth = 30,
+        InnerHealthGold = 0.0,
+        OuterHealthGold = 0.0,
+    },
+    ["medical_cocainegum"] = {
+        Status = {
+            Hunger = 0,
+            Thirst = 0,
+            Stress = 0,
+            Metabolism = 0,
+        },
+        CoolDown = 90,
+        Stamina = 0,
+        InnerStaminaGold = 100.0,
+        OuterStaminaGold = 100.0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 100.0,
+        OuterHealthGold = 100.0,
+    },
+    ["medical_octavio"] = {
+        Status = {
+            Hunger = 0,
+            Thirst = 0,
+            Stress = 0,
+            Metabolism = 0,
+        },
+        Stamina = 100,
+        InnerStaminaGold = 0.0,
+        OuterStaminaGold = 0.0,
+        InnerHealth = 100,
+        OuterHealth = 100,
+        InnerHealthGold = 0.0,
+        OuterHealthGold = 0.0,
+    },
+    ["medical_tankertonic"] = {
+        Status = {
+            Hunger = 0,
+            Thirst = 0,
+            Stress = 0,
+            Metabolism = -500, -- Healthy,
+        },
+        Stamina = 50,
+        InnerStaminaGold = 50.0,
+        OuterStaminaGold = 50.0,
+        InnerHealth = 100,
+        OuterHealth = 50,
+        InnerHealthGold = 0.0,
+        OuterHealthGold = 0.0,
+    },
+    ["medical_thickelixir"] = {
+        Status = {
+            Hunger = 0,
+            Thirst = 0,
+            Stress = 0,
+            Metabolism = 500, -- Fatty,
+        },
+        Stamina = 0,
+        InnerStaminaGold = 0.0,
+        OuterStaminaGold = 0.0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0.0,
+        OuterHealthGold = 0.0,
+    },
+    ["medical_lolipop"] = {
+        Status = {
+            Hunger = 0,
+            Thirst = 0,
+            Stress = 40,
+            Metabolism = 0,
+        },
+        CoolDown = 90,
+        Stamina = 0,
+        InnerStaminaGold = 100.0,
+        OuterStaminaGold = 100.0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 100.0,
+        OuterHealthGold = 100.0,   
+    },
+    ["bandage"] = {
+        Status = {
+            Hunger = 0,
+            Thirst = 0,
+            Stress = 0,
+            Metabolism = 0,
+        },
+        Stamina = 0,
+        InnerStaminaGold = 0.0,
+        OuterStaminaGold = 0.0,
+        InnerHealth = 100,
+        OuterHealth = 0,
+        InnerHealthGold = 0.0,
+        OuterHealthGold = 0.0,   
+        
+    },
+    --Moonshines
+    consumable_moonshine = {
+        Status = {
+            Hunger = 0,
+            Thirst = 35,
+            Stress = 10,
+            Metabolism = math.random(-10, 10),
+        },
+        AlcoholLevel = 75,
+        Stamina = 7,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_moonshine_jar"
+    },
+    consumable_blackberry_moonshine = {
+        Status = {
+            Hunger = 0,
+            Thirst = 35,
+            Stress = 10,
+            Metabolism = math.random(-10, 10),
+        },
+        AlcoholLevel = 75,
+        Stamina = 7,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_moonshine_jar"
+    },
+    consumable_apple_moonshine = {
+        Status = {
+            Hunger = 0,
+            Thirst = 35,
+            Stress = 10,
+            Metabolism = math.random(-10, 10),
+        },
+        AlcoholLevel = 75,
+        Stamina = 7,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_moonshine_jar"
+    },
+    consumable_peach_moonshine60p = {
+        Status = {
+            Hunger = 0,
+            Thirst = 35,
+            Stress = 10,
+            Metabolism = math.random(-10, 10),
+        },
+        AlcoholLevel = 100,
+        Stamina = 7,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_moonshine_jar"
+    },
+    consumable_plum_moonshine60p = {
+        Status = {
+            Hunger = 0,
+            Thirst = 35,
+            Stress = 10,
+            Metabolism = math.random(-10, 10),
+        },
+        AlcoholLevel = 100,
+        Stamina = 7,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_moonshine_jar"
+    },
+    consumable_blackberry_moonshine90p = {
+        Status = {
+            Hunger = 0,
+            Thirst = 35,
+            Stress = 10,
+            Metabolism = math.random(-10, 10),
+        },
+        AlcoholLevel = 200,
+        Stamina = 7,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_moonshine_jar"
+    },
+    consumable_raspberry_moonshine90p = {
+        Status = {
+            Hunger = 0,
+            Thirst = 35,
+            Stress = 10,
+            Metabolism = math.random(-10, 10),
+        },
+        AlcoholLevel = 200,
+        Stamina = 7,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_moonshine_jar"
     },
 }

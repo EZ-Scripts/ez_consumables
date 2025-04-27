@@ -1,5 +1,6 @@
 local alcoholCount = 0
 local effectActive = false
+local CoolDown = {}
 
 local function loadAnimDict(dict)
     RequestAnimDict(dict)
@@ -140,8 +141,27 @@ RegisterNetEvent("ez_consume:consume", function(status, stamina, innerstaminagol
 	end
 end)
 
-RegisterNetEvent("ez_consume:useitem", function(item)
+RegisterNetEvent("ez_consume:useitem", function(item, label)
 	local v = Config.ItemsToUse[item]
+	if v == nil then
+		return
+	end
+	if CoolDown[item] ~= nil then
+		TriggerEvent("vorp:TipRight", "You need to wait ".. CoolDown[item] .." seconds before using this item again.", 5000)
+		return
+	end
+	if v.CoolDown then
+		TriggerServerEvent("ez_consume:removeItem", item)
+		TriggerEvent("vorp:TipRight", "You used a "..label, 5000)
+		CoolDown[item] = v.CoolDown
+		Citizen.CreateThread(function()
+			while CoolDown[item] and CoolDown[item] > 0 do
+				CoolDown[item] = CoolDown[item] - 1
+				Wait(1000)
+			end
+			CoolDown[item] = nil
+		end)
+	end
 	if v.Animation ~= nil then
 		local Animations = exports.vorp_animations.initiate()
 		Animations.playAnimation(v.Animation, Config.AnimationTime)
