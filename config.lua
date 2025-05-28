@@ -6,7 +6,7 @@ Config.AnimationTime = 5000 -- Time in MS for the animation to play
 
 Config.Drunk = {
     Drunk = 100,
-    PassOut = 300,
+    PassOut = 350,
 }
 --[[
 Functions to add values. This is compatible with VORP & EZ.
@@ -38,8 +38,10 @@ item_name = { -- Database Name (DB NAME)
     OuterStaminaGold = 0.0, -- Outer Core Stamina Gold overpower
     InnerHealth = 0,        -- Inner Core Health effect
     OuterHealth = 0,        -- Outer Core Health effect
+    AlcoholLevel = 0,      -- Alcohol level (0 to 100)
     InnerHealthGold = 0.0,  -- Inner Core Health Gold overpower
     OuterHealthGold = 100.0,-- Outer Core Health Gold overpower
+    CoolDown = 0,         -- Cooldown time in seconds (optional)
     Animation = "drink_whisky_bottle", -- Animation when consuming the item (optional)
     ItemInteraction = "EAT_CANNED_FOOD_CYLINDER@D8-2_H10-5_QUICK_LEFT" -- Specific interaction for the item (optional)
 },
@@ -188,12 +190,12 @@ Config.ItemsToUse = {
     },
     consumable_biggamechop = {
         Status = {
-            Hunger = 18,
-            Thirst = 0,
+            Hunger = 30,
+            Thirst = -15,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
         },
-        Stamina = 5,
+        Stamina = 0,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
         InnerHealth = 0,
@@ -233,12 +235,12 @@ Config.ItemsToUse = {
     },
     consumable_boiledegg = {
         Status = {
-            Hunger = 15,
-            Thirst = 0,
+            Hunger = 10,
+            Thirst = -3,
             Stress = 5,
             Metabolism = math.random(1000,1000),
         },
-        Stamina = 5,
+        Stamina = 0,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
         InnerHealth = 0,
@@ -624,12 +626,12 @@ Config.ItemsToUse = {
     },
     consumable_spaghetti_meatballs = {
         Status = {
-            Hunger = 25,
+            Hunger = 45,
             Thirst = 0,
-            Stress = 5,
+            Stress = 15,
             Metabolism = math.random(1, 80), -- Fatty
         },
-        Stamina = 5,
+        Stamina = 0,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
         InnerHealth = 0,
@@ -657,6 +659,21 @@ Config.ItemsToUse = {
             Hunger = 15,
             Thirst = 0,
             Stress = 5,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_cracker = {
+        Status = {
+            Hunger = 8,
+            Thirst = 0,
+            Stress = 4,
             Metabolism = math.random(1, 80), -- Fatty
         },
         Stamina = 5,
@@ -707,6 +724,21 @@ Config.ItemsToUse = {
             Metabolism = math.random(1, 80), -- Fatty
         },
         Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    consumable_wuwamen = {
+        Status = {
+            Hunger = 40,
+            Thirst = 20,
+            Stress = 10,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 0,
         InnerStaminaGold = 0,
         OuterStaminaGold = 0,
         InnerHealth = 0,
@@ -1181,4 +1213,55 @@ Config.ItemsToUse = {
         OuterHealthGold = 0,
         Animation = "drink_moonshine_jar"
     },
+    --custom Items
+    ["consumable_fruitcake"] = {
+        Status = {
+            Hunger = 30,
+            Thirst = 10,
+            Stress = 0,
+            Metabolism = 50,
+        },
+        CoolDown = 90,
+        Stamina = 0,
+        InnerStaminaGold = 100.0,
+        OuterStaminaGold = 100.0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+     bluegill_everyclear = {
+        Status = {
+            Hunger = 0,
+            Thirst = 40,
+            Stress = 0,
+            Metabolism = math.random(0, 10),
+        },
+        AlcoholLevel = 60,
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_whisky_bottle"
+    },
+    consumable_chocolatecookie = {
+        Status = {
+            Hunger = 50,
+            Thirst = 0,
+            Stress = 20,
+            Metabolism = math.random(0, 10),
+        },
+        AlcoholLevel = 0,
+        Stamina = 0,
+        InnerStaminaGold = 100.0,
+        OuterStaminaGold = 100.0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+    
 }
