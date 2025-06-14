@@ -1263,7 +1263,7 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
-     consumable_cbkiss = {
+    consumable_cbkiss = {
         Status = {
             Hunger = 45,
             Thirst = 0,
@@ -1294,7 +1294,7 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
         Animation = "drink_coffee",
-        ItemReturn = "emptywaterbottle" -- or "glassbottle" if you want to be more generic
+        ItemReturn = "emptywaterbottle"
     },
     consumable_velvetsin = {
         Status = {
@@ -1311,7 +1311,7 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
-     consumable_rhubarbpie = {
+    consumable_rhubarbpie = {
         Status = {
             Hunger = 40,
             Thirst = 0,
@@ -1326,7 +1326,7 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
-     consumable_potatosoup = {
+    consumable_potatosoup = {
         Status = {
             Hunger = 40,
             Thirst = 20,
@@ -1342,6 +1342,7 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
+    
 }
 
 Config.ItemToSplit = {
