@@ -18,6 +18,19 @@ Citizen.CreateThread(function()
             end
         end)
     end
+
+    for k, v in pairs(Config.ItemToSplit) do
+        VorpInv.RegisterUsableItem(k, function(data)
+            VorpInv.subItem(data.source, k, 1)
+            for j, l in pairs(v) do
+                l.count = l.count or 1
+                l.label = l.label or exports.vorp_inventory:getItemDB(l.item).label
+                VorpInv.addItem(data.source, j, l.count)
+                TriggerClientEvent("vorp:TipRight", data.source, "Received "..l.count.." "..l.label, 5000)
+                Wait(1000)
+            end
+        end)
+    end
 end)
 
 RegisterNetEvent("ez_consume:removeItem", function(item)

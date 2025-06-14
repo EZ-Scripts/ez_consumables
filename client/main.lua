@@ -14,19 +14,13 @@ Citizen.CreateThread(function()
     while true do
         Wait(10)
         if alcoholCount > 0 then
-            Wait(5000)
+            Wait(0)
             alcoholCount = alcoholCount -1
             if Config.Debug == true then
                 print("alcohol count: "..alcoholCount)
                 Wait(1000)
             end
-            if alcoholCount > Config.Drunk.Drunk and alcoholCount < Config.Drunk.PassOut then
-                Citizen.InvokeNative(0x406CCF555B04FAD3 , PlayerPedId(), 1, 0.95) --drunk
-                if effectActive == false then
-                    AnimpostfxPlay("PlayerDrunk01") -- start screen effect
-                    effectActive = true
-                end
-            elseif alcoholCount > Config.Drunk.PassOut then
+            if alcoholCount > Config.Drunk.PassOut then
                 loadAnimDict('amb_misc@world_human_vomit@male_a@idle_b')
 				TaskPlayAnim(PlayerPedId(), "amb_misc@world_human_vomit@male_a@idle_b", "idle_f", 8.0, -8.0, -1, 31, 0, true, 0, false, 0, false)
 				RemoveAnimDict('amb_misc@world_human_vomit@male_a@idle_b')
@@ -35,12 +29,20 @@ Citizen.CreateThread(function()
                 TriggerEvent('ez_consumables:client:sleep')
                 Wait(30000)
                 TriggerEvent('ez_consumables:client:cancelemote')
+			elseif alcoholCount > Config.Drunk.Drunk then
+				Citizen.InvokeNative(0x406CCF555B04FAD3 , PlayerPedId(), 1, 0.95) --drunk
+				if effectActive == false then
+					AnimpostfxPlay("PlayerDrunk01") -- start screen effect
+					effectActive = true
+				end
+				Wait(2000)
             else
                 Citizen.InvokeNative(0x406CCF555B04FAD3 , PlayerPedId(), 1, 0.0) --not drunk
                 if effectActive == true then
                     AnimpostfxStop("PlayerDrunk01") -- stop screen effect
                     effectActive = false
                 end
+				Wait(5000)
             end
         else
             Wait(2000)
@@ -93,6 +95,11 @@ RegisterNetEvent("ez_consume:consume", function(status, stamina, innerstaminagol
 
 	if (stamina ~= 0) then
 		local s = Citizen.InvokeNative(0x36731AC041289BB1, ped, 1) --ACTUAL STAMINA CORE GETTER
+		if type(s) == "number" then
+			--print("stamina before: "..s)
+		else
+			s = 0
+		end
 		s = s + tonumber(stamina)
 
 		if (s > 100) then
@@ -140,6 +147,33 @@ RegisterNetEvent("ez_consume:consume", function(status, stamina, innerstaminagol
 		Citizen.InvokeNative(0xF6A7C08DF2E28B28, ped, 0, outerhealthgold, true)
 	end
 end)
+
+RegisterCommand("getlevelconsumable", function(source, args)
+	local type = args[1]
+	if type == nil then
+		print("Please specify a consumable type.")
+		return
+	end
+	if type == "alcohol" then
+		print("Alcohol level: " .. alcoholCount)
+	elseif type == "stamina" then
+		local stamina = Citizen.InvokeNative(0x36731AC041289BB1, PlayerPedId(), 1) --ACTUAL STAMINA CORE GETTER
+		if type(stamina) == "number" then
+			print("Stamina level: " .. stamina)
+		else
+			print("Stamina level: 0")
+		end
+	elseif type == "health" then
+		local health = Citizen.InvokeNative(0x36731AC041289BB1, PlayerPedId(), 0) --ACTUAL HEALTH CORE GETTER
+		if type(health) == "number" then
+			print("Health level: " .. health)
+		else
+			print("Health level: 0")
+		end
+	else
+		print("Invalid consumable type. Use 'alcohol', 'stamina', or 'health'.")
+	end
+end, false)
 
 RegisterNetEvent("ez_consume:useitem", function(item, label)
 	local v = Config.ItemsToUse[item]
