@@ -6,7 +6,7 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 author 'Rayaan Uddin'
 name "ez_consumables" -- Do not change this.
 description 'A RedM consumable system, allows you to make food/ drinks for all metabolism systems you use.'
-version '1.1'
+version '1.2'
 
 shared_scripts {
     'config.lua'

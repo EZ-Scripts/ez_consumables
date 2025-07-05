@@ -69,7 +69,7 @@ Config.ItemsToUse = {
     },
     consumable_venison = {
         Status = {
-            Hunger = 15,
+            Hunger = 10,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(-10, 10),
@@ -99,7 +99,7 @@ Config.ItemsToUse = {
     },
     consumable_porkchop = {
         Status = {
-            Hunger = 25,
+            Hunger = 15,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -145,7 +145,7 @@ Config.ItemsToUse = {
    
     consumable_bird = {
         Status = {
-            Hunger = 19,
+            Hunger = 10,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -175,7 +175,7 @@ Config.ItemsToUse = {
     },
     consumable_stringymeat = {
         Status = {
-            Hunger = 20,
+            Hunger = 10,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -190,7 +190,7 @@ Config.ItemsToUse = {
     },
     consumable_biggamechop = {
         Status = {
-            Hunger = 30,
+            Hunger = 10,
             Thirst = -15,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -205,7 +205,7 @@ Config.ItemsToUse = {
     },
     consumable_herptile = {
         Status = {
-            Hunger = 22,
+            Hunger = 12,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -220,7 +220,7 @@ Config.ItemsToUse = {
     },
     consumable_gamemeatjerky = {
         Status = {
-            Hunger = 18,
+            Hunger = 12,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -250,7 +250,7 @@ Config.ItemsToUse = {
     },
     consumable_heartcookie = {
         Status = {
-            Hunger = 15,
+            Hunger = 20,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -280,7 +280,7 @@ Config.ItemsToUse = {
     },
     consumable_caramel = {
         Status = {
-            Hunger = 10,
+            Hunger = 5,
             Thirst = 0,
             Stress = 18,
             Metabolism = math.random(30, 50), -- Fatty
@@ -295,7 +295,7 @@ Config.ItemsToUse = {
     },
     consumable_chocolate = {
         Status = {
-            Hunger = 10,
+            Hunger = 5,
             Thirst = 0,
             Stress = 15,
             Metabolism = math.random(30, 50), -- Fatty
@@ -310,7 +310,7 @@ Config.ItemsToUse = {
     },
     consumable_fruitsalad = {
         Status = {
-            Hunger = 15,
+            Hunger = 10,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(-80, -40), -- Healthy
@@ -325,7 +325,7 @@ Config.ItemsToUse = {
     },
     consumable_game = {
         Status = {
-            Hunger = 35,
+            Hunger = 10,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(-40, -10), -- Healthy
@@ -340,9 +340,9 @@ Config.ItemsToUse = {
     },
     consumable_peach = {
         Status = {
-            Hunger = 15,
-            Thirst = 10,
-            Stress = 5,
+            Hunger = 3,
+            Thirst = 2,
+            Stress = 2,
             Metabolism = math.random(-10, 10),
         },
         Stamina = 10,
@@ -355,7 +355,7 @@ Config.ItemsToUse = {
     },
     consumable_salmon = {
         Status = {
-            Hunger = 30,
+            Hunger = 3,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(-1000, -999), -- Healthy
@@ -385,7 +385,7 @@ Config.ItemsToUse = {
     },
     consumable_pear = {
         Status = {
-            Hunger = 15,
+            Hunger = 3,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(-10, 10),
@@ -400,7 +400,7 @@ Config.ItemsToUse = {
     },
     consumable_kidneybeans_can = {
         Status = {
-            Hunger = 20,
+            Hunger = 5,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(-80, -1), -- Healthy
@@ -416,7 +416,7 @@ Config.ItemsToUse = {
     },
     consumable_blueberrypie = {
         Status = {
-            Hunger = 19,
+            Hunger = 20,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -431,7 +431,7 @@ Config.ItemsToUse = {
     },
     consumable_chickenpie = {
         Status = {
-            Hunger = 30,
+            Hunger = 20,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -461,7 +461,7 @@ Config.ItemsToUse = {
     },
     consumable_donut = {
         Status = {
-            Hunger = 15,
+            Hunger = 20,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -506,7 +506,7 @@ Config.ItemsToUse = {
     },
     consumable_pretzel = {
         Status = {
-            Hunger =18,
+            Hunger = 20,
             Thirst = 0,
             Stress = 8,
             Metabolism = math.random(1, 80), -- Fatty
@@ -536,7 +536,7 @@ Config.ItemsToUse = {
     },
     consumable_lemondrops = {
         Status = {
-            Hunger =8,
+            Hunger = 8,
             Thirst = 0,
             Stress = 10,
             Metabolism = math.random(1, 80), -- Fatty
@@ -641,7 +641,7 @@ Config.ItemsToUse = {
     },
     consumable_peachcobbler = {
         Status = {
-            Hunger = 15,
+            Hunger = 25,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -703,7 +703,7 @@ Config.ItemsToUse = {
 
     consumable_breakfast = {
         Status = {
-            Hunger = 15,
+            Hunger = 30,
             Thirst = 0,
             Stress = 5,
             Metabolism = math.random(1, 80), -- Fatty
@@ -731,21 +731,7 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
-    consumable_wuwamen = {
-        Status = {
-            Hunger = 40,
-            Thirst = 20,
-            Stress = 10,
-            Metabolism = math.random(1, 80), -- Fatty
-        },
-        Stamina = 0,
-        InnerStaminaGold = 0,
-        OuterStaminaGold = 0,
-        InnerHealth = 0,
-        OuterHealth = 0,
-        InnerHealthGold = 0,
-        OuterHealthGold = 0,
-    },
+   
 
     --
     -- DRINKS
@@ -854,7 +840,7 @@ Config.ItemsToUse = {
     consumable_coffee = {
         Status = {
             Hunger = 0,
-            Thirst = 25,
+            Thirst = 10,
             Stress = 10,
             Metabolism = math.random(-80, -40), -- Healthy
         },
@@ -886,7 +872,7 @@ Config.ItemsToUse = {
     consumable_ginsengtea = {
         Status = {
             Hunger = 0,
-            Thirst = 25,
+            Thirst = 15,
             Stress = 5,
             Metabolism = math.random(-80, -40), -- Healthy
         },
@@ -902,7 +888,7 @@ Config.ItemsToUse = {
     consumable_raspberrywater = {
         Status = {
             Hunger = 0,
-            Thirst = 35,
+            Thirst = 25,
             Stress = 5,
             Metabolism = math.random(-80, -40), -- Healthy
         },
@@ -919,7 +905,7 @@ Config.ItemsToUse = {
     consumable_blackberrywater = {
         Status = {
             Hunger = 0,
-            Thirst = 35,
+            Thirst = 25,
             Stress = 5,
             Metabolism = math.random(-80, -40), -- Healthy
         },
@@ -937,7 +923,7 @@ Config.ItemsToUse = {
     consumable_water = {
         Status = {
             Hunger = 0,
-            Thirst = 15,
+            Thirst = 10,
             Stress = 5,
             Metabolism = math.random(-10, 0), -- Healthy
         },
@@ -1004,17 +990,17 @@ Config.ItemsToUse = {
         Status = {
             Hunger = 0,
             Thirst = 0,
-            Stress = 0,
+            Stress = 50,
             Metabolism = 0,
         },
         CoolDown = 90,
         Stamina = 0,
         InnerStaminaGold = 100.0,
         OuterStaminaGold = 100.0,
-        InnerHealth = 0,
+        InnerHealth = 100.0,
         OuterHealth = 0,
-        InnerHealthGold = 100.0,
-        OuterHealthGold = 100.0,
+        InnerHealthGold = 0.0,
+        OuterHealthGold = 0.0, 
     },
     ["medical_octavio"] = {
         Status = {
@@ -1065,17 +1051,33 @@ Config.ItemsToUse = {
         Status = {
             Hunger = 0,
             Thirst = 0,
-            Stress = 40,
+            Stress = 50,
             Metabolism = 0,
         },
         CoolDown = 90,
         Stamina = 0,
-        InnerStaminaGold = 100.0,
-        OuterStaminaGold = 100.0,
+        InnerStaminaGold = 0.0,
+        OuterStaminaGold = 0.0,
         InnerHealth = 0,
-        OuterHealth = 0,
+        OuterHealth = 60.0,
         InnerHealthGold = 100.0,
-        OuterHealthGold = 100.0,   
+        OuterHealthGold = 0.0,   
+    },
+    ["medical_goldenpot"] = {
+        Status = {
+            Hunger = 0,
+            Thirst = 0,
+            Stress = 50,
+            Metabolism = 0,
+        },
+        CoolDown = 90,
+        Stamina = 0,
+        InnerStaminaGold = 0.0,
+        OuterStaminaGold = 0.0,
+        InnerHealth = 0,
+        OuterHealth = 60.0,
+        InnerHealthGold = 100.0,
+        OuterHealthGold = 0.0,   
     },
     ["bandage"] = {
         Status = {
@@ -1230,6 +1232,22 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
+    consumable_hashbrown = {
+        Status = {
+            Hunger = 40,
+            Thirst = 0,
+            Stress = 5,
+            Metabolism = math.random(0, 10),
+        },
+        AlcoholLevel = 0,
+        Stamina = 0,
+        InnerStaminaGold = 0.0,
+        OuterStaminaGold = 0.0,
+        InnerHealth = 0.0,
+        OuterHealth = 30.0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
      bluegill_everyclear = {
         Status = {
             Hunger = 0,
@@ -1296,6 +1314,21 @@ Config.ItemsToUse = {
         Animation = "drink_coffee",
         ItemReturn = "emptywaterbottle"
     },
+     consumable_wuwamen = {
+        Status = {
+            Hunger = 40,
+            Thirst = 20,
+            Stress = 10,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 0,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
     consumable_velvetsin = {
         Status = {
             Hunger = 40,
@@ -1342,9 +1375,76 @@ Config.ItemsToUse = {
         InnerHealthGold = 0,
         OuterHealthGold = 0,
     },
-    
+     consumable_peachpalinka = {
+        Status = {
+            Hunger = 0,
+            Thirst = 35,
+            Stress = 10,
+            Metabolism = math.random(0, 10),
+        },
+        AlcoholLevel = 55,
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_whisky_bottle"
+    },
+     consumable_gulyas = {
+        Status = {
+            Hunger = 55,
+            Thirst = 15,
+            Stress = 0,
+            Metabolism = math.random(1, 80), -- Fatty
+        },
+        Stamina = 0,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+    },
+        consumable_rootbeer = {
+        Status = {
+            Hunger = 0,
+            Thirst = 50,
+            Stress = 20,
+            Metabolism =  math.random(-10, 10),
+        },
+        Stamina = 0,
+        InnerStaminaGold = 100.0,
+        OuterStaminaGold = 100.0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_whisky_bottle",
+        ItemReturn = "emptywaterbottle"
+    },
+     consumable_blueberrylightning = {
+        Status = {
+            Hunger = 0,
+            Thirst = 50,
+            Stress = 10,
+            Metabolism = math.random(0, 10),
+        },
+        AlcoholLevel = 40,
+        Stamina = 5,
+        InnerStaminaGold = 0,
+        OuterStaminaGold = 0,
+        InnerHealth = 0,
+        OuterHealth = 0,
+        InnerHealthGold = 0,
+        OuterHealthGold = 0,
+        Animation = "drink_whisky_bottle"
+    },
 }
 
+-- Usable items that when used give you different items.
 Config.ItemToSplit = {
+    -- Example Vanilla Cake gives you 5 sponge cakes and 1 beer box.
     vanillacake = {consumable_spongecake = {count = 5, label = "Sponge Cake"}, beerbox = {count = 1, label = "Beer Box"}},
 }
