@@ -18,7 +18,6 @@ Citizen.CreateThread(function()
             alcoholCount = alcoholCount -1
             if Config.Debug == true then
                 print("alcohol count: "..alcoholCount)
-                Wait(1000)
             end
             if alcoholCount > Config.Drunk.PassOut then
                 loadAnimDict('amb_misc@world_human_vomit@male_a@idle_b')
@@ -38,7 +37,7 @@ Citizen.CreateThread(function()
 				Wait(2000)
             else
                 Citizen.InvokeNative(0x406CCF555B04FAD3 , PlayerPedId(), 1, 0.0) --not drunk
-                if effectActive == true then
+                if Config.Debug or effectActive == true then
                     AnimpostfxStop("PlayerDrunk01") -- stop screen effect
                     effectActive = false
                 end
@@ -133,7 +132,6 @@ RegisterNetEvent("ez_consume:consume", function(status, stamina, innerstaminagol
 	end
 
 	--GOLDS
-
 	if (innerstaminagold ~= 0) then
 		Citizen.InvokeNative(0x4AF5A4C7B9157D14, ped, 1, innerstaminagold, true)
 	end
@@ -196,16 +194,27 @@ RegisterNetEvent("ez_consume:useitem", function(item, label)
 			CoolDown[item] = nil
 		end)
 	end
-	if v.Animation ~= nil then
-		local Animations = exports.vorp_animations.initiate()
-		Animations.playAnimation(v.Animation, Config.AnimationTime)
+	if v.Animation ~= nil and Config.AnimationRun == "vorp_animations" then
+		if Animations == nil then
+			Animations = exports.vorp_animations.initiate()
+		end
+		Animations.playAnimation(v.Animation, v.AnimationTime or Config.AnimationTime or 8000)
+		Wait(v.AnimationTime or Config.AnimationTime or 8000)
+		Animations.endAnimation(v.Animation)
+		TriggerEvent("ez_consume:consume", v.Status, v.Stamina, v.InnerStaminaGold, v.OuterStaminaGold, v.InnerHealth, v.InnerHealthGold, v.OuterHealth, v.OuterHealthGold, v.AlcoholLevel)
+	elseif Config.AnimationRun == "ez_consumables" and v.Animation ~= nil and Config.Animations[v.Animation] then
+		Config.Animations[v.Animation](v, function(success)
+			if success then
+				TriggerEvent("ez_consume:consume", v.Status, v.Stamina, v.InnerStaminaGold, v.OuterStaminaGold, v.InnerHealth, v.InnerHealthGold, v.OuterHealth, v.OuterHealthGold, v.AlcoholLevel)
+			end
+		end)
 	else
 		if v.ItemInteraction ~= nil then
 			TaskItemInteraction(PlayerPedId(), nil, GetHashKey(v.ItemInteraction), true, 0, 0)
 		else
     		TaskItemInteraction(PlayerPedId(), nil, GetHashKey("EAT_MULTI_BITE_FOOD_SPHERE_D8-2_SANDWICH_QUICK_LEFT_HAND"), true, 0, 0)
 		end
-		Citizen.InvokeNative(0x2208438012482A1A, PlayerPedId(), true, true)
+		ForcePedAiAndAnimationUpdate(PlayerPedId(), true, true)
+		TriggerEvent("ez_consume:consume", v.Status, v.Stamina, v.InnerStaminaGold, v.OuterStaminaGold, v.InnerHealth, v.InnerHealthGold, v.OuterHealth, v.OuterHealthGold, v.AlcoholLevel)
 	end
-	TriggerEvent("ez_consume:consume", v.Status, v.Stamina, v.InnerStaminaGold, v.OuterStaminaGold, v.InnerHealth, v.InnerHealthGold, v.OuterHealth, v.OuterHealthGold, v.AlcoholLevel)
 end)
