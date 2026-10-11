@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ez_consumables</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app" class="hidden">
+    <section id="window" class="window">
+        <div class="window__bg"></div>
+        <div class="window__smudge"></div>
+        <div class="window__inner">
+            <header class="header">
+                <div class="header__side" id="headLeft"></div>
+                <div class="header__title"><h1 id="title"></h1></div>
+                <div class="header__side header__side--right">
+                    <button id="close" class="close framed" data-act="close" aria-label="Close">&#x2715;</button>
+                </div>
+            </header>
+            <nav id="tabs" class="tabs"></nav>
+            <div class="divider"></div>
+            <main id="body" class="body"></main>
+        </div>
+    </section>
+</div>
+<div id="previewBar" class="previewbar hidden"></div>
+<div id="toasts" class="toasts"></div>
+<script src="app.js"></script>
+</body>
+</html>
