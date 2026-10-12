@@ -107,6 +107,7 @@ end)
 
 CreateThread(function()
     EnsureTables()
+    PruneHistory()
     LoadItemList()
     local counts = LoadAll()
     SyncUsableItems()

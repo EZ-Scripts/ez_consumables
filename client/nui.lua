@@ -24,6 +24,10 @@ RegisterNetEvent("ez_consumables:client:adminPatch", function(patch, select)
     if AdminOpen then SendNUIMessage({action = "adminPatch", patch = patch, select = select}) end
 end)
 
+RegisterNetEvent("ez_consumables:client:adminHistory", function(result)
+    if AdminOpen then SendNUIMessage({action = "history", result = result}) end
+end)
+
 RegisterNetEvent("ez_consumables:client:adminToast", function(text, ok)
     if AdminOpen then SendNUIMessage({action = "toast", text = text, ok = ok}) end
 end)

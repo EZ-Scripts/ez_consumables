@@ -20,6 +20,8 @@ const AD = {
     dirty: false,
     confirm: false,
     leaveKey: null,
+    // History tab. filter = {kind, id, name} when only one consumable / effect is shown
+    history: { rows: [], more: false, loaded: false, search: "", kind: "all", filter: null, open: null, confirm: null, token: 0 },
 };
 
 // ---------------------------------------------------------------- Helpers
@@ -440,6 +442,7 @@ function actionsHtml(d, canDuplicate) {
         <button class="btn btn--primary framed" data-act="save">${esc(d.id ? A.save : A.create)}</button>
         ${d.id && canDuplicate ? `<button class="btn framed" data-act="duplicate">${esc(A.duplicate)}</button>` : ""}
         ${d.id ? `<button class="btn framed" data-act="revert">${esc(A.revert)}</button>` : ""}
+        ${d.id ? `<button class="btn framed" data-act="rowHistory">${esc(A.historyOf)}</button>` : ""}
         <span class="grow"></span>
         ${d.id ? `<button class="btn ${AD.confirm ? "btn--confirm" : "btn--danger"} framed" data-act="delete">${esc(AD.confirm ? A.confirmDelete : A.delete)}</button>` : ""}
     </div>`;
@@ -636,6 +639,167 @@ function effectEditorHtml(d) {
     </div>`;
 }
 
+// ---------------------------------------------------------------- History tab
+
+function when(seconds) {
+    if (!seconds) return "";
+    const d = new Date(seconds * 1000);
+    const pad = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+const emptyValue = (v) => v === "" || v === null || v === undefined || (typeof v === "object" && !arr(v).length && !Object.keys(v).length);
+
+/** A history value the way the editor shows it */
+function historyValue(field, v) {
+    const A = S.A;
+    const D = S.data;
+    if (field === "animation" && emptyValue(v)) return A.default;
+    if (emptyValue(v)) return "—";
+    if (typeof v === "boolean") return v ? A.on : A.off;
+    switch (field) {
+        case "item":
+            return `${itemLabel(v)} (${v})`;
+        case "kind":
+            return D.kindMap.get(v) || v;
+        case "animation":
+            return (D.animMap.get(v) || {}).label || v;
+        case "effect": {
+            const e = D.effects.get(Number(v));
+            return e ? e.label : `#${v}`;
+        }
+        case "use_time":
+            return `${v / 1000}s`;
+        case "gives":
+        case "requires":
+            return arr(v).map((g) => `${g.count}x ${itemLabel(g.name)}`).join(", ");
+        case "postfx":
+            return arr(v).join(", ");
+        case "prop": {
+            const vec = (p) => (p ? `${p.x}, ${p.y}, ${p.z}` : null);
+            return [v.model, v.bone, vec(v.offset), vec(v.rotation) && `${vec(v.rotation)}°`].filter(Boolean).join(" · ");
+        }
+    }
+    return typeof v === "object" ? JSON.stringify(v) : String(v);
+}
+
+/** Old → new per field. A new row only lists what it was given (not every 0 and Off) */
+function changesHtml(h) {
+    const A = S.A;
+    let keys = Object.keys(h.changes || {});
+    if (h.action === "create" || h.action === "restore") keys = keys.filter((k) => { const v = h.changes[k][1]; return !emptyValue(v) && v !== 0 && v !== false; });
+    if (!keys.length) return h.action === "delete" ? "" : `<div class="hint">${esc(A.noChanges)}</div>`;
+    const fields = A.fields || {};
+    keys.sort((a, b) => byLabel(fields[a] || a, fields[b] || b));
+    return `<div class="changes">${keys
+        .map((k) => `<span>${esc(fields[k] || k)}</span><s>${esc(historyValue(k, h.changes[k][0]))}</s><b>${esc(historyValue(k, h.changes[k][1]))}</b>`)
+        .join("")}</div>`;
+}
+
+function historyName(h) {
+    return h.kind === "consumables" ? itemLabel(h.name) : h.name;
+}
+
+/** The rows (and "Load more") inside the history list */
+function historyRowsHtml() {
+    const A = S.A;
+    const H = AD.history;
+    const rows = H.rows.map((h) => {
+        const open = H.open === h.id;
+        const exists = S.data[h.kind] && S.data[h.kind].has(h.row_id);
+        // A delete can only be undone while it is still gone; any other version can always be put back
+        const canPutBack = h.has_before && !(h.action === "delete" && exists);
+        const putBackLabel = H.confirm === h.id ? A.confirmPutBack : h.action === "delete" ? A.restore : A.putBack;
+        let body = "";
+        if (open) {
+            body = `<div class="history__body">
+                ${changesHtml(h)}
+                <div class="row">
+                    ${exists ? `<button class="btn btn--small framed" data-act="historyGo" data-id="${h.id}">${esc(A.open)}</button>` : ""}
+                    ${H.filter ? "" : `<button class="btn btn--small framed" data-act="historyOnly" data-id="${h.id}">${esc(fmt(A.historyFor, historyName(h)))}</button>`}
+                    ${canPutBack ? `<button class="btn btn--small ${H.confirm === h.id ? "btn--confirm" : ""} framed" data-act="putBack" data-id="${h.id}">${esc(putBackLabel)}</button>` : ""}
+                </div>
+            </div>`;
+        }
+        return `<div class="history__row ${open ? "open" : ""}">
+            <button class="history__head" data-act="historyOpen" data-id="${h.id}">
+                <span class="history__when">${esc(when(h.at))}</span>
+                <span class="chip chip--${esc(h.action)}">${esc((A.actions || {})[h.action] || h.action)}</span>
+                ${h.kind === "consumables" ? img(h.name, historyName(h), "thumb--xs") : `<span class="list-id">#${h.row_id}</span>`}
+                <b>${esc(historyName(h))}</b><small>${esc(A.tabs[h.kind] || h.kind)}${h.kind === "consumables" ? ` · ${esc(h.name)}` : ""}</small>
+                <span class="grow"></span><span class="muted">${esc(h.actor || "")}</span>
+            </button>
+            ${body}
+        </div>`;
+    });
+    return `${rows.length ? rows.join("") : `<div class="empty">${esc(H.loaded ? A.historyEmpty : A.loading)}</div>`}
+        ${H.more ? `<div class="row row--center"><button class="btn btn--small framed" data-act="historyMore">${esc(A.loadMore)}</button></div>` : ""}`;
+}
+
+function historyHtml() {
+    const A = S.A;
+    const H = AD.history;
+    const kinds = ["all", "consumables", "effects"]
+        .map((k) => `<option value="${k}" ${H.kind === k ? "selected" : ""}>${esc(k === "all" ? A.historyAll : A.tabs[k])}</option>`)
+        .join("");
+    return `<div class="col grow history-tab">
+        <div class="row">
+            <div class="search grow"><input id="hSearch" class="input" placeholder="${esc(A.historySearch)}" value="${esc(H.search)}" autocomplete="off"></div>
+            ${H.filter
+                ? `<span class="chip chip--gold">${esc(fmt(A.historyFor, H.filter.name))}</span><button class="btn btn--small framed" data-act="historyAll">${esc(A.showAll)}</button>`
+                : `<select id="hKind" class="input history__kind">${kinds}</select>`}
+            <button class="btn btn--small framed" data-act="historyReload">${esc(A.reload)}</button>
+        </div>
+        <div id="hList" class="scroll grow history" data-scroll="history">${historyRowsHtml()}</div>
+    </div>`;
+}
+
+/** Redraws only the list, so the search box keeps focus while results come in */
+function renderHistoryList() {
+    const el = $("hList");
+    if (!el) return render();
+    keepScroll(() => (el.innerHTML = historyRowsHtml()));
+}
+
+/** Asks the server for the first page (or the next one). Answers that come back after a newer ask are dropped */
+function loadHistory(more) {
+    const H = AD.history;
+    H.token++;
+    if (!more) H.confirm = null;
+    adminPost("history", {
+        kind: H.filter ? H.filter.kind : H.kind === "all" ? null : H.kind,
+        row_id: H.filter ? H.filter.id : null,
+        search: H.search.trim(),
+        before: more && H.rows.length ? H.rows[H.rows.length - 1].id : null,
+        token: H.token,
+    });
+}
+
+function setHistory(result) {
+    const H = AD.history;
+    if (!result || result.token !== H.token) return;
+    const rows = arr(result.rows);
+    H.rows = result.append ? H.rows.concat(rows) : rows;
+    H.more = !!result.more;
+    H.loaded = true;
+    if (AD.tab === "history" && S.open) renderHistoryList();
+}
+
+/** Opens the History tab, showing only one consumable / effect when filter is given */
+function showHistory(filter) {
+    const H = AD.history;
+    AD.tab = "history";
+    AD.draft = null;
+    AD.dirty = false;
+    AD.confirm = false;
+    H.filter = filter || null;
+    H.open = null;
+    H.rows = [];
+    H.loaded = false;
+    loadHistory(false);
+    render();
+}
+
 function editorHtml() {
     const d = AD.draft;
     if (!d) return `<div class="empty">${esc(S.A.pickSomething)}</div>`;
@@ -648,9 +812,13 @@ function render() {
     const D = S.data;
     $("title").textContent = A.title;
     $("headLeft").innerHTML = `<span class="subtitle">${esc(fmt(A.counts, D.consumables.size, D.effects.size))}</span>`;
-    $("tabs").innerHTML = ["consumables", "effects"]
+    $("tabs").innerHTML = ["consumables", "effects", "history"]
         .map((t) => `<button class="tab framed ${t === AD.tab ? "active" : ""}" data-act="tab" data-tab="${t}">${esc(A.tabs[t])}</button>`)
         .join("");
+    if (AD.tab === "history") {
+        keepScroll(() => ($("body").innerHTML = historyHtml()));
+        return;
+    }
     const list = adminListHtml();
     keepScroll(() => {
         $("body").innerHTML = `<div class="cols cols--admin">
@@ -918,11 +1086,60 @@ const clicks = {
     tab(el) {
         const tab = el.dataset.tab;
         if (tab === AD.tab || !canLeave("tab:" + tab)) return;
+        sound("button", 0.2);
+        if (tab === "history") return showHistory(null);
         AD.tab = tab;
         const keep = AD.sel[tab];
         selectRow(tab, keep !== null && keep !== "new" && S.data[tab].has(keep) ? keep : null);
+        render();
+    },
+    rowHistory() {
+        if (!AD.draft || !AD.draft.id || !canLeave("history")) return;
+        const kind = AD.tab;
+        sound("button", 0.2);
+        showHistory({ kind, id: AD.draft.id, name: kind === "consumables" ? itemLabel(AD.draft.item) : AD.draft.label });
+    },
+    historyOpen(el) {
+        const H = AD.history;
+        const id = Number(el.dataset.id);
+        H.open = H.open === id ? null : id;
+        H.confirm = null;
+        renderHistoryList();
+    },
+    historyGo(el) {
+        const h = AD.history.rows.find((r) => r.id === Number(el.dataset.id));
+        if (!h || !S.data[h.kind].has(h.row_id)) return;
+        AD.tab = h.kind;
+        selectRow(h.kind, h.row_id);
+        revealRow(h.kind, h.row_id);
         sound("button", 0.2);
         render();
+    },
+    historyOnly(el) {
+        const h = AD.history.rows.find((r) => r.id === Number(el.dataset.id));
+        if (h) showHistory({ kind: h.kind, id: h.row_id, name: historyName(h) });
+    },
+    historyAll() {
+        showHistory(null);
+    },
+    historyMore() {
+        loadHistory(true);
+    },
+    historyReload() {
+        sound("button", 0.2);
+        loadHistory(false);
+    },
+    putBack(el) {
+        const H = AD.history;
+        const id = Number(el.dataset.id);
+        if (H.confirm !== id) {
+            H.confirm = id;
+            return renderHistoryList();
+        }
+        H.confirm = null;
+        sound("selected", 0.3);
+        adminPost("revert", id);
+        renderHistoryList();
     },
     pick(el) {
         const id = Number(el.dataset.id);
@@ -1043,6 +1260,11 @@ function applyPatch(patch, select) {
         const row = D[AD.tab].get(AD.draft.id);
         if (row) AD.draft = clone(row);
     }
+    // Something was changed, so the history has a new entry
+    if (patch.history) {
+        if (AD.tab === "history") loadHistory(false);
+        else AD.history.loaded = false;
+    }
     renderSoon();
 }
 
@@ -1106,8 +1328,13 @@ document.addEventListener("input", (e) => {
         AD.filters[AD.tab].search = t.value;
         AD.page[AD.tab] = 1;
         renderList();
+    } else if (t.id === "hSearch") {
+        AD.history.search = t.value;
+        clearTimeout(historyTimer);
+        historyTimer = setTimeout(() => loadHistory(false), 350);
     }
 });
+let historyTimer = null;
 
 document.addEventListener("change", (e) => {
     const t = e.target;
@@ -1121,6 +1348,9 @@ document.addEventListener("change", (e) => {
         AD.filters.consumables.kind = t.value;
         AD.page.consumables = 1;
         renderList();
+    } else if (t.id === "hKind") {
+        AD.history.kind = t.value;
+        loadHistory(false);
     }
 });
 
@@ -1200,7 +1430,8 @@ window.addEventListener("message", (e) => {
             for (const kind of ["consumables", "effects"]) {
                 if (AD.sel[kind] !== null && AD.sel[kind] !== "new" && !S.data[kind].has(AD.sel[kind])) AD.sel[kind] = null;
             }
-            selectRow(AD.tab, AD.sel[AD.tab] === "new" ? null : AD.sel[AD.tab]);
+            if (AD.tab === "history") loadHistory(false); // opened again on the History tab: it may have moved on
+            else selectRow(AD.tab, AD.sel[AD.tab] === "new" ? null : AD.sel[AD.tab]);
             S.open = true;
             $("app").classList.remove("hidden");
             render();
@@ -1208,6 +1439,9 @@ window.addEventListener("message", (e) => {
             break;
         case "adminPatch":
             if (S.data) applyPatch(data.patch || {}, data.select);
+            break;
+        case "history":
+            setHistory(data.result);
             break;
         case "toast":
             if (data.ok === true) sound("selected", 0.25);

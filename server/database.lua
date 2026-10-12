@@ -82,6 +82,22 @@ local Schema = {
         PRIMARY KEY (`id`),
         UNIQUE KEY `item` (`item`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]],
+    -- Every admin change: who, when, what changed, and the version it replaced (so it can be put back)
+    [[CREATE TABLE IF NOT EXISTS `ez_consumables_history` (
+        `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        `kind` VARCHAR(16) NOT NULL,
+        `row_id` INT UNSIGNED NOT NULL,
+        `name` VARCHAR(64) NOT NULL,
+        `action` VARCHAR(16) NOT NULL,
+        `actor_id` VARCHAR(100) NULL DEFAULT NULL,
+        `actor` VARCHAR(100) NULL DEFAULT NULL,
+        `at` INT NOT NULL,
+        `changes` LONGTEXT NULL DEFAULT NULL,
+        `before` LONGTEXT NULL DEFAULT NULL,
+        PRIMARY KEY (`id`),
+        KEY `row` (`kind`, `row_id`),
+        KEY `at` (`at`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4]],
 }
 
 local function hasColumn(tableName, column)
@@ -395,6 +411,98 @@ end
 
 function LabelOf(item)
     return Items[item] and Items[item].label or item
+end
+
+---------------------------------------------------------------- History
+
+--- What changed between two versions of a row: {[column] = {old, new}}, nil when nothing did.
+--- before = nil for a new row. "" stands in for nothing (a nil would break the pair)
+function Differences(kind, before, after)
+    local changes, any = {}, false
+    for _, column in ipairs(Specs[kind].columns) do
+        if column ~= "updated_by" then
+            local a, b = before and before[column], after[column]
+            local same = a == b
+            if not same and type(a) == "table" and type(b) == "table" then same = json.encode(a) == json.encode(b) end
+            -- An empty list and nothing are the same thing
+            if not same and Specs[kind].list[column] and (a == nil or (type(a) == "table" and not next(a))) and (b == nil or (type(b) == "table" and not next(b))) then same = true end
+            if not same then
+                changes[column] = {a == nil and "" or a, b == nil and "" or b}
+                any = true
+            end
+        end
+    end
+    return any and changes or nil
+end
+
+--- The name a history entry is listed under
+function HistoryName(kind, row)
+    return (kind == "consumables" and row.item or row.label or "?"):sub(1, 64)
+end
+
+--- Adds a history row
+--- @param entry table {kind, row, action, actor = {id, name}, changes?, before?}
+function DbHistory(entry)
+    MySQL.insert.await(
+        "INSERT INTO `ez_consumables_history` (`kind`, `row_id`, `name`, `action`, `actor_id`, `actor`, `at`, `changes`, `before`) VALUES (@kind, @row_id, @name, @action, @actor_id, @actor, @at, @changes, @before)",
+        {
+            kind = entry.kind, row_id = entry.row.id, name = HistoryName(entry.kind, entry.row), action = entry.action,
+            actor_id = entry.actor and entry.actor.id, actor = entry.actor and entry.actor.name, at = os.time(),
+            changes = entry.changes and json.encode(entry.changes) or nil, before = entry.before and json.encode(entry.before) or nil,
+        }
+    )
+end
+
+--- History rows, newest first. filter = {kind?, row_id?, search?, before? (history id)}
+function DbHistoryPage(filter, limit)
+    local where, values = {}, {}
+    if Specs[filter.kind] then
+        where[#where + 1] = "`kind` = ?"
+        values[#values + 1] = filter.kind
+        if filter.row_id then
+            where[#where + 1] = "`row_id` = ?"
+            values[#values + 1] = filter.row_id
+        end
+    end
+    if filter.search and filter.search ~= "" then
+        local like = "%" .. filter.search:gsub("[%%_\\]", "\\%0") .. "%"
+        where[#where + 1] = "(`name` LIKE ? OR `actor` LIKE ?)"
+        values[#values + 1] = like
+        values[#values + 1] = like
+    end
+    if filter.before then
+        where[#where + 1] = "`id` < ?"
+        values[#values + 1] = filter.before
+    end
+    values[#values + 1] = limit + 1
+    local query = ("SELECT `id`, `kind`, `row_id`, `name`, `action`, `actor`, `at`, `changes`, (`before` IS NOT NULL) AS `has_before` FROM `ez_consumables_history`%s ORDER BY `id` DESC LIMIT ?")
+        :format(#where > 0 and (" WHERE " .. table.concat(where, " AND ")) or "")
+    local rows = MySQL.query.await(query, values) or {}
+    local more = #rows > limit
+    if more then rows[#rows] = nil end
+    for i, row in ipairs(rows) do
+        rows[i] = {
+            id = tonumber(row.id), kind = row.kind, row_id = tonumber(row.row_id), name = row.name, action = row.action,
+            actor = row.actor, at = tonumber(row.at), changes = decode(row.changes, nil),
+            has_before = row.has_before == true or tonumber(row.has_before) == 1,
+        }
+    end
+    return rows, more
+end
+
+--- One history row with the version it replaced (cleaned like any other row), or nil
+function DbReadHistory(id)
+    local row = (MySQL.query.await("SELECT * FROM `ez_consumables_history` WHERE `id` = ?", {id}) or {})[1]
+    if not row or not Specs[row.kind] then return nil end
+    local before = decode(row.before, nil)
+    if type(before) == "table" then before = Cleaners[row.kind](before, true) end
+    return {id = tonumber(row.id), kind = row.kind, row_id = tonumber(row.row_id), name = row.name, action = row.action, before = before}
+end
+
+--- Drops history older than Config.HistoryKeepDays (0 = keep for ever)
+function PruneHistory()
+    if (Config.HistoryKeepDays or 0) <= 0 then return end
+    MySQL.update.await("DELETE FROM `ez_consumables_history` WHERE `at` < ?", {os.time() - Config.HistoryKeepDays * 86400})
 end
 
 --- Item names that aren't in the items table (none when the table couldn't be read)

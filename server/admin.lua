@@ -148,11 +148,46 @@ end)
 
 local Actions = {}
 
-function Actions.saveConsumable(src, input)
+--- Who made a change, for the history: their license and their name
+local function actorOf(src)
+    return {id = GetPlayerIdentifierByType(src, "license"), name = adminName(src)}
+end
+
+local function shown(value)
+    if value == "" or value == nil then return "-" end
+    if type(value) == "table" then value = json.encode(value) end
+    return tostring(value):sub(1, 80)
+end
+
+--- "field: `old` → `new`" per changed column, for Discord
+local function changesText(changes)
+    local parts = {}
+    for column, pair in pairs(changes or {}) do
+        parts[#parts + 1] = ("%s: `%s` → `%s`"):format(column, shown(pair[1]), shown(pair[2]))
+    end
+    table.sort(parts)
+    return table.concat(parts, "\n")
+end
+
+--- What a history entry is: a new row, a change, or a version put back (restore = put back after a delete)
+local function actionOf(before, revertOf, restoring)
+    if revertOf then return restoring and "restore" or "revert" end
+    return before and "update" or "create"
+end
+
+local LogTitles = {
+    consumables = {create = "Consumable Created", update = "Consumable Updated", revert = "Consumable Reverted", restore = "Consumable Restored"},
+    effects = {create = "Effect Created", update = "Effect Updated", revert = "Effect Reverted", restore = "Effect Restored"},
+}
+
+--- Creates or changes a consumable. revertOf = the history entry being put back (from Actions.revert)
+local function saveConsumable(src, input, revertOf)
     local c, why = CleanConsumable(input)
     if not c then return toast(src, T("admin.errors." .. why)) end
     local before = c.id and Data.consumables[c.id]
-    if c.id and not before then return toast(src, T("admin.errors.missing")) end
+    -- Putting back a deleted consumable brings it back under its old id
+    local restoring = revertOf ~= nil and c.id ~= nil and not before
+    if c.id and not before and not restoring then return toast(src, T("admin.errors.missing")) end
     local other = ByItem[c.item]
     if other and other.id ~= c.id then return toast(src, T("admin.errors.duplicate", LabelOf(c.item))) end
     local names = {c.item}
@@ -160,20 +195,30 @@ function Actions.saveConsumable(src, input)
     for _, need in ipairs(c.requires) do names[#names + 1] = need.name end
     local unknown = UnknownItems(names)
     if #unknown > 0 then return toast(src, T("admin.errors.unknownItems", table.concat(unknown, ", "))) end
+    local changes = Differences("consumables", before, c)
+    if before and not changes then return toast(src, T(revertOf and "admin.errors.alreadyThat" or "admin.errors.nothingChanged")) end
 
-    c.updated_by = adminName(src)
+    local actor = actorOf(src)
+    c.updated_by = actor.name
     if before then
         DbUpdate("consumables", c)
-    elseif not DbInsert("consumables", c) then
+    elseif not DbInsert("consumables", c, restoring and c.id or nil) then
         return toast(src, T("admin.errors.database"))
     end
     Data.consumables[c.id] = c
     RebuildIndex()
     SyncUsableItems()
+    local action = actionOf(before, revertOf, restoring)
+    DbHistory({kind = "consumables", row = c, action = action, actor = actor, changes = changes, before = before})
 
-    sendPatch({consumables = {c}}, src, {kind = "consumables", id = c.id})
-    toast(src, T(before and "admin.saved" or "admin.created", LabelOf(c.item)), true)
-    Log(before and "Consumable Updated" or "Consumable Created", ("**%s** (`%s`, #%s)\n```%s```"):format(LabelOf(c.item), c.item, c.id, json.encode(c)), nil, src)
+    sendPatch({consumables = {c}, history = true}, src, {kind = "consumables", id = c.id})
+    toast(src, T(revertOf and "admin.reverted" or before and "admin.saved" or "admin.created", LabelOf(c.item)), true)
+    Log(LogTitles.consumables[action], ("**%s** (`%s`, #%s)%s\n%s"):format(LabelOf(c.item), c.item, c.id, revertOf and (" to history #" .. revertOf) or "", changesText(changes)),
+        revertOf and Config.LogColors.revert or nil, src)
+end
+
+function Actions.saveConsumable(src, input)
+    saveConsumable(src, input)
 end
 
 function Actions.deleteConsumable(src, id)
@@ -183,44 +228,93 @@ function Actions.deleteConsumable(src, id)
     Data.consumables[c.id] = nil
     RebuildIndex()
     SyncUsableItems()
-    sendPatch({removed = {consumables = {c.id}}}, src)
+    DbHistory({kind = "consumables", row = c, action = "delete", actor = actorOf(src), before = c})
+    sendPatch({removed = {consumables = {c.id}}, history = true}, src)
     toast(src, T("admin.deleted", LabelOf(c.item)), true)
     Log("Consumable Deleted", ("**%s** (`%s`, #%s)\n```%s```"):format(LabelOf(c.item), c.item, c.id, json.encode(c)), Config.LogColors.delete, src)
 end
 
-function Actions.saveEffect(src, input)
+--- Creates or changes an effect. revertOf = the history entry being put back (from Actions.revert)
+local function saveEffect(src, input, revertOf)
     local e, why = CleanEffect(input)
     if not e then return toast(src, T("admin.errors." .. why)) end
     local before = e.id and Data.effects[e.id]
-    if e.id and not before then return toast(src, T("admin.errors.missing")) end
+    local restoring = revertOf ~= nil and e.id ~= nil and not before
+    if e.id and not before and not restoring then return toast(src, T("admin.errors.missing")) end
+    local changes = Differences("effects", before, e)
+    if before and not changes then return toast(src, T(revertOf and "admin.errors.alreadyThat" or "admin.errors.nothingChanged")) end
+
     if before then
         DbUpdate("effects", e)
-    elseif not DbInsert("effects", e) then
+    elseif not DbInsert("effects", e, restoring and e.id or nil) then
         return toast(src, T("admin.errors.database"))
     end
     Data.effects[e.id] = e
-    sendPatch({effects = {e}}, src, {kind = "effects", id = e.id})
-    toast(src, T(before and "admin.saved" or "admin.created", e.label), true)
-    Log(before and "Effect Updated" or "Effect Created", ("**%s** (#%s)\n```%s```"):format(e.label, e.id, json.encode(e)), nil, src)
+    local action = actionOf(before, revertOf, restoring)
+    DbHistory({kind = "effects", row = e, action = action, actor = actorOf(src), changes = changes, before = before})
+
+    sendPatch({effects = {e}, history = true}, src, {kind = "effects", id = e.id})
+    toast(src, T(revertOf and "admin.reverted" or before and "admin.saved" or "admin.created", e.label), true)
+    Log(LogTitles.effects[action], ("**%s** (#%s)%s\n%s"):format(e.label, e.id, revertOf and (" to history #" .. revertOf) or "", changesText(changes)),
+        revertOf and Config.LogColors.revert or nil, src)
+end
+
+function Actions.saveEffect(src, input)
+    saveEffect(src, input)
 end
 
 function Actions.deleteEffect(src, id)
     local e = Data.effects[WholeNumber(id, 1) or 0]
     if not e then return toast(src, T("admin.errors.missing")) end
-    local changed = {}
+    local actor = actorOf(src)
+    local changed, olds = {}, {}
     for _, c in pairs(Data.consumables) do
         if c.effect == e.id then
+            local old = {}
+            for key, value in pairs(c) do old[key] = value end
             c.effect, c.effect_time = nil, nil
             changed[#changed + 1] = c
+            olds[#olds + 1] = old
         end
     end
     DbUpdateMany("consumables", changed)
     DbDelete("effects", e.id)
     Data.effects[e.id] = nil
-    sendPatch({consumables = changed, removed = {effects = {e.id}}}, src)
+    DbHistory({kind = "effects", row = e, action = "delete", actor = actor, before = e})
+    -- Each consumable that lost the effect gets its own entry, so it can be put back too
+    for i, c in ipairs(changed) do
+        DbHistory({kind = "consumables", row = c, action = "update", actor = actor, changes = Differences("consumables", olds[i], c), before = olds[i]})
+    end
+    sendPatch({consumables = changed, removed = {effects = {e.id}}, history = true}, src)
     toast(src, T("admin.deleted", e.label), true)
     if #changed > 0 then toast(src, T("admin.cleared", #changed)) end
-    Log("Effect Deleted", ("**%s** (#%s), taken off %s consumables"):format(e.label, e.id, #changed), Config.LogColors.delete, src)
+    Log("Effect Deleted", ("**%s** (#%s), taken off %s consumables\n```%s```"):format(e.label, e.id, #changed, json.encode(e)), Config.LogColors.delete, src)
+end
+
+--- Puts a consumable or effect back the way it was before a history entry (brings it back if it was deleted)
+function Actions.revert(src, id)
+    id = WholeNumber(id, 1)
+    local entry = id and DbReadHistory(id)
+    if not entry or type(entry.before) ~= "table" then return toast(src, T("admin.errors.noVersion")) end
+    local input = entry.before
+    input.id = entry.row_id
+    if entry.kind == "consumables" then
+        saveConsumable(src, input, entry.id)
+    else
+        saveEffect(src, input, entry.id)
+    end
+end
+
+--- A page of history for the History tab. filter = {kind?, row_id?, search?, before?, token}
+function Actions.history(src, filter)
+    filter = type(filter) == "table" and filter or {}
+    local rows, more = DbHistoryPage({
+        kind = filter.kind,
+        row_id = WholeNumber(filter.row_id, 1),
+        search = type(filter.search) == "string" and filter.search:sub(1, 64) or nil,
+        before = WholeNumber(filter.before, 1),
+    }, Config.HistoryPage)
+    TriggerClientEvent("ez_consumables:client:adminHistory", src, {rows = rows, more = more, append = filter.before ~= nil, token = filter.token})
 end
 
 RegisterNetEvent("ez_consumables:server:admin", function(action, payload)

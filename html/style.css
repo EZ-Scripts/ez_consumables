@@ -463,8 +463,32 @@ label.field, .field { display: flex; flex-direction: column; gap: 0.5vh; font-si
 .editor__head .grow { min-width: 0; }
 .editor__head small { color: var(--muted); font-size: 1.3vh; }
 .input[type=number]::placeholder, .input::placeholder { color: var(--dim); }
-.chip--bad { color: var(--bad); }
-.chip--gold { color: var(--gold); }
+.chip { display: inline-block; flex-shrink: 0; padding: 0.2vh 0.7vh; font-size: 1.1vh; color: var(--muted); border: 1px solid rgba(255, 255, 255, 0.18); white-space: nowrap; }
+.chip--bad { color: var(--bad); border-color: rgba(224, 119, 109, 0.5); }
+.chip--gold { color: var(--gold); border-color: rgba(217, 180, 90, 0.5); }
+.chip--create, .chip--restore { color: var(--ok); border-color: rgba(159, 194, 126, 0.5); }
+.chip--update, .chip--revert { color: var(--gold); border-color: rgba(217, 180, 90, 0.5); }
+.chip--delete { color: var(--bad); border-color: rgba(224, 119, 109, 0.5); }
+
+/* ---------- History ---------- */
+
+.history-tab { height: 100%; min-height: 0; }
+.history__kind { width: 22vh; flex-shrink: 0; }
+.history { display: flex; flex-direction: column; gap: 0.4vh; }
+.history__row { border: 1px solid transparent; flex-shrink: 0; }
+.history__row.open { border-color: var(--line); background: rgba(255, 255, 255, 0.03); }
+.history__head { display: flex; align-items: center; gap: 1.2vh; width: 100%; padding: 0.8vh 1vh; text-align: left; }
+.history__head:hover { background: rgba(255, 255, 255, 0.04); }
+.history__head b { font-weight: 500; white-space: nowrap; }
+.history__head small { color: var(--dim); font-size: 1.2vh; white-space: nowrap; }
+.history__when { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 1.3vh; width: 15vh; flex-shrink: 0; }
+.history__body { padding: 0.4vh 1.4vh 1.4vh; display: flex; flex-direction: column; gap: 1vh; }
+.row--center { justify-content: center; }
+
+.changes { display: grid; grid-template-columns: 18vh minmax(0, 1fr) minmax(0, 1fr); gap: 0.5vh 1.6vh; font-size: 1.35vh; margin: 0.4vh 0; }
+.changes span { color: var(--muted); }
+.changes s { color: var(--bad); text-decoration: line-through; word-break: break-word; }
+.changes b { color: var(--ok); font-weight: 500; word-break: break-word; }
 
 /* ---------- Preview bar (panel hidden, admin watching the preview) ---------- */
 

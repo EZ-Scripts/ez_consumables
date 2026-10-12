@@ -23,7 +23,7 @@ Lang = {
     admin = {
         suggestion = "Open the consumables admin panel",
         title = "Consumables",
-        tabs = {consumables = "Consumables", effects = "Effects"},
+        tabs = {consumables = "Consumables", effects = "Effects", history = "History"},
         counts = "%s consumables · %s effects",
 
         new = "New",
@@ -145,10 +145,41 @@ Lang = {
             shake_amount = {"Still", "Violent"},
         },
 
+        -- History
+        historyOf = "History",
+        historySearch = "Name or admin...",
+        historyEmpty = "Nothing yet",
+        historyAll = "Everything",
+        historyFor = "Only %s",
+        showAll = "Show all",
+        loading = "Loading...",
+        reload = "Reload",
+        loadMore = "Load more",
+        open = "Open",
+        putBack = "Put this version back",
+        restore = "Bring it back",
+        confirmPutBack = "Click again to put it back",
+        noChanges = "No field changes recorded",
+        actions = {create = "Created", update = "Changed", delete = "Deleted", revert = "Put back", restore = "Restored"},
+        -- Column names in the history (anything missing shows the column name)
+        fields = {
+            item = "Item", kind = "Type", hunger = "Hunger", thirst = "Thirst", stress = "Stress", metabolism = "Metabolism",
+            stamina = "Stamina core", inner_health = "Health core", outer_health = "Health bar",
+            inner_health_gold = "Gold health core", outer_health_gold = "Gold health bar",
+            inner_stamina_gold = "Gold stamina core", outer_stamina_gold = "Gold stamina bar",
+            alcohol = "Alcohol", cooldown = "Cooldown", animation = "Animation", interaction = "Item interaction", prop = "Prop",
+            effect = "Effect", effect_time = "Effect time", clear_effects = "Ends any effect", sober = "Sobers up",
+            gives = "Gives back", uses = "Puffs", use_time = "Time per puff", requires = "Needs", enabled = "Enabled",
+            label = "Name", duration = "Time", postfx = "Screen effects", start_fx = "At the start", end_fx = "At the end",
+            timecycle = "Colour filter", strength = "Strength", drunk = "Wobble", shake = "Camera shake",
+            shake_amount = "Shake amount", shake_time = "Shake for", blur = "Motion blur",
+        },
+
         -- Server replies
         saved = "Saved %s",
         created = "Created %s",
         deleted = "Deleted %s",
+        reverted = "Put back %s",
         cleared = "%s consumables no longer use this effect",
         errors = {
             invalid = "That didn't look right",
@@ -158,6 +189,9 @@ Lang = {
             missing = "That doesn't exist any more",
             unknownItems = "Not in the items table: %s",
             database = "Saving failed, check the server console",
+            nothingChanged = "Nothing changed",
+            alreadyThat = "It is already like that",
+            noVersion = "There is no earlier version to put back",
         },
     },
 }
