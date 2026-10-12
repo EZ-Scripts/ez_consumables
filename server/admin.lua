@@ -80,6 +80,19 @@ CreateThread(function()
     SetTimeout(STATIC_REFRESH, refreshItems)
 end)
 
+-- ez_itemcreator made, changed or removed an item: re-read the items table now, not on the next refresh.
+-- Server only (AddEventHandler), several changes close together are read once
+local itemsQueued = false
+AddEventHandler("ez_itemcreator:itemsChanged", function()
+    if not Ready or itemsQueued then return end
+    itemsQueued = true
+    SetTimeout(1000, function()
+        itemsQueued = false
+        LoadItemList()
+        rebuildStatic()
+    end)
+end)
+
 --- Sends the panel only what it doesn't have yet. full = send everything
 local function openPanel(src, full)
     if not Static then rebuildStatic() end
