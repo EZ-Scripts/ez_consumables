@@ -1,5 +1,5 @@
 "use strict";
-// /manageconsumables panel. Same look and helpers as bfrp_crafting's admin panel
+// /manageconsumables panel. Same look and helpers as ez_crafting's admin panel
 const RESOURCE = typeof GetParentResourceName === "function" ? GetParentResourceName() : "ez_consumables";
 const $ = (id) => document.getElementById(id);
 

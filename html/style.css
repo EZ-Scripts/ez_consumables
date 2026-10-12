@@ -1,4 +1,4 @@
-/* RedM look, as in the ez scripts (copied from bfrp_crafting). Fonts, images and sounds come from jo_libs (JUMP ON studios) */
+/* RedM look, as in the ez scripts (copied from ez_crafting). Fonts, images and sounds come from jo_libs (JUMP ON studios) */
 @font-face { font-family: Crock; src: url(assets/fonts/crock.ttf) format("truetype"); font-display: block; }
 @font-face { font-family: Hapna; src: url(assets/fonts/Hapna.ttf) format("truetype"); font-weight: 400; font-display: block; }
 @font-face { font-family: Hapna; src: url(assets/fonts/HapnaMedium.ttf) format("truetype"); font-weight: 500; font-display: block; }
