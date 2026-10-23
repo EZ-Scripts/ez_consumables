@@ -65,6 +65,11 @@ end
 
 ---------------------------------------------------------------- Natives without a name in the RedM Lua runtime
 
+--- Shuts the vorp inventory window, used when a consumable is used from it
+function CloseInventory()
+    TriggerEvent("vorp_inventory:CloseInv")
+end
+
 function SetPedDrunkness(ped, drunk, amount)
     Citizen.InvokeNative(0x406CCF555B04FAD3, ped, drunk, amount + 0.0)
 end

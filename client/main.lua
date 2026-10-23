@@ -46,6 +46,7 @@ local function smoking(c)
 end
 
 RegisterNetEvent("ez_consumables:client:use", function(c)
+    CloseInventory()
     Consuming = true
     local smoke = smoking(c)
     PlayConsumeAnimation(c, function(completed)
